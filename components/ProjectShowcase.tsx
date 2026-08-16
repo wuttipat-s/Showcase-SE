@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import type { Swiper as SwiperClass } from 'swiper';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { ExternalLink, FileText, Presentation, ChevronDown } from 'lucide-react';
 
@@ -38,14 +39,25 @@ const getImageUrl = (url: string) => {
 export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
   const [isIdle, setIsIdle] = useState(false);
   const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const swiperRef = useRef<SwiperClass | null>(null);
 
-  // ฟังก์ชันตรวจจับการขยับเมาส์เพื่อซ่อน/แสดง ปุ่มเลื่อน
+  // ตรวจจับการขยับเมาส์: หยุด Autoplay ขณะขยับ และเริ่มใหม่เมื่อเมาส์หยุดนิ่ง
   const handleMouseMove = () => {
     setIsIdle(false);
+
+    // หยุด Autoplay ทันทีที่เมาส์มีการขยับ
+    if (swiperRef.current?.autoplay?.running) {
+      swiperRef.current.autoplay.stop();
+    }
+
     if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
-    
+
+    // เมื่อเมาส์หยุดขยับเกิน 2.5 วินาที ให้ Autoplay ทำงานต่อ
     idleTimerRef.current = setTimeout(() => {
       setIsIdle(true);
+      if (swiperRef.current?.autoplay && !swiperRef.current.autoplay.running) {
+        swiperRef.current.autoplay.start();
+      }
     }, 2500);
   };
 
@@ -77,13 +89,15 @@ export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
         ${isIdle ? '[&_.swiper-button-next]:opacity-0 [&_.swiper-button-prev]:opacity-0 [&_.swiper-pagination]:opacity-0' : '[&_.swiper-button-next]:opacity-100 [&_.swiper-button-prev]:opacity-100 [&_.swiper-pagination]:opacity-100'}`}
     >
       <Swiper
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
         spaceBetween={0}
         slidesPerView={1}
         loop={projects.length > 1}
         autoplay={{
           delay: 8000,
           disableOnInteraction: false,
-          pauseOnMouseEnter: true,
         }}
         pagination={{ clickable: true }}
         navigation={true}
@@ -106,7 +120,7 @@ export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
                       alt={project.title}
                       className="absolute inset-0 w-full h-full object-cover object-center"
                     />
-                    {/* Dark Gradient Overlay ไล่ระดับสีดำเน้นขอบล่างชัดขึ้น */}
+                    {/* Dark Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                   </>
                 )}
