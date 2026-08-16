@@ -107,17 +107,17 @@ export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
                       alt={project.title}
                       className="absolute inset-0 w-full h-full object-cover object-center"
                     />
-                    {/* Dark Overlay Gradient ปรับลดความเข้มลง 20% */}
+                    {/* Dark Overlay Gradient */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   </>
                 )}
 
                 {/* Content at Bottom-Left Corner */}
-                <div className="relative z-10 max-w-2xl text-left mb-12">
-                  <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-3 text-white drop-shadow-md">
+                <div className="relative z-10 max-w-3xl text-left mb-12">
+                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-4 text-white drop-shadow-lg">
                     {project.title}
                   </h1>
-                  <p className="text-sm md:text-base text-neutral-200 font-normal leading-relaxed drop-shadow">
+                  <p className="text-base sm:text-lg md:text-2xl text-neutral-100 font-semibold leading-relaxed drop-shadow-md">
                     {project.short_description}
                   </p>
                 </div>
