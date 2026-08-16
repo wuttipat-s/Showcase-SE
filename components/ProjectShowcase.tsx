@@ -44,7 +44,6 @@ export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
     setIsIdle(false);
     if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
     
-    // ตั้งเวลา 2.5 วินาทีหากไม่ขยับเมาส์ให้จางหายไป
     idleTimerRef.current = setTimeout(() => {
       setIsIdle(true);
     }, 2500);
@@ -97,7 +96,7 @@ export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
             <div className="h-screen w-full overflow-y-auto snap-y snap-mandatory scroll-smooth">
               
               {/* Section 1: Hero / Fullscreen Image with Bottom-Left Text (100vh) */}
-              <section className="h-screen w-full snap-start relative flex flex-col justify-end p-6 md:p-12 overflow-hidden bg-neutral-950">
+              <section className="h-screen w-full snap-start relative flex flex-col justify-end p-6 md:p-16 overflow-hidden bg-neutral-950">
                 
                 {/* Fullscreen Image Background */}
                 {project.logo_url && (
@@ -107,25 +106,25 @@ export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
                       alt={project.title}
                       className="absolute inset-0 w-full h-full object-cover object-center"
                     />
-                    {/* Dark Overlay Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    {/* Dark Gradient Overlay ไล่ระดับสีดำเน้นขอบล่างชัดขึ้น */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                   </>
                 )}
 
                 {/* Content at Bottom-Left Corner */}
-                <div className="relative z-10 max-w-3xl text-left mb-12">
-                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-4 text-white drop-shadow-lg">
+                <div className="relative z-10 max-w-3xl text-left mb-10 md:mb-14">
+                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-4 text-white drop-shadow-lg leading-tight">
                     {project.title}
                   </h1>
-                  <p className="text-base sm:text-lg md:text-2xl text-neutral-100 font-semibold leading-relaxed drop-shadow-md">
+                  <p className="text-base sm:text-lg md:text-xl text-neutral-200 font-medium leading-relaxed drop-shadow-md max-w-2xl">
                     {project.short_description}
                   </p>
                 </div>
 
                 {/* Arrow indicator */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center animate-bounce text-white/70 z-10">
-                  <span className="text-[10px] mb-1 tracking-widest uppercase font-medium">เลื่อนลงเพื่อดูรายละเอียด</span>
-                  <ChevronDown className="w-4 h-4" />
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center animate-bounce text-white/80 z-10">
+                  <span className="text-[10px] mb-1 tracking-widest uppercase font-semibold drop-shadow">เลื่อนลงเพื่อดูรายละเอียด</span>
+                  <ChevronDown className="w-4 h-4 drop-shadow" />
                 </div>
               </section>
 
